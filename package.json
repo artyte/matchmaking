@@ -1,0 +1,19 @@
+{
+  "name": "matchmaking",
+  "version": "1.0.0",
+  "description": "## Context",
+  "main": "index.js",
+  "scripts": {
+    "test": "placeholder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artyte/matchmaking.git"
+  },
+  "author": "Kai Sheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artyte/matchmaking/issues"
+  },
+  "homepage": "https://github.com/artyte/matchmaking#readme"
+}
