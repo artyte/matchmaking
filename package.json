@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/artyte/matchmaking/issues"
   },
-  "homepage": "https://github.com/artyte/matchmaking#readme"
+  "homepage": "https://github.com/artyte/matchmaking#readme",
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  }
 }
