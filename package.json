@@ -18,9 +18,7 @@
   "homepage": "https://github.com/artyte/matchmaking#readme",
   "type": "module",
   "devDependencies": {
-    "eslint": "^8.42.0"
-  },
-  "dependencies": {
+    "eslint": "^8.42.0",
     "jest": "^29.5.0"
   }
 }
