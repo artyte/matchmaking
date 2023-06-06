@@ -1,4 +1,5 @@
 import Match from '../src/matchmaking/Match';
+// var Match = require('../src/matchmaking/Match');
 
 describe('Match', () => {
   it('should give team1', () => {
