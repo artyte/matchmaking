@@ -37,7 +37,7 @@ We've also provided you a Maven/Java project template as a starting point to cre
 
 ## Pre-Requisite
 
-**Please use the following guide to install your tools for the OS of choice**
+**Please use the following guide to install your tools for the OS of your choice**
 ### Linux
 Using CLI:
 ```
