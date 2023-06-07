@@ -45,6 +45,13 @@ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 nvm install node
 ```
 
+### Mac
+using CLI:
+```
+curl -L https://bit.ly/n-install | bash
+sudo n latest
+```
+
 ### Windows
 Using GUI:
 Download and install from [this link](https://nodejs.org/dist/v20.2.0/node-v20.2.0-x64.msi)
