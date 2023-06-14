@@ -1,5 +1,5 @@
 /**
- * Template class for determining matches.
+ * Template class for entering matches.
  * 
  * @class
  */
