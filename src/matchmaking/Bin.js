@@ -6,20 +6,25 @@ export default class Bin {
    *
    * @param {number} min Inclusive minimum rating of rating range.
    * @param {number} max Exclusive maximum rating of rating range.
-   * @param {number} len Format of match used for bin.
+   * @param {number} playersPerTeam Format of match used for bin.
    */
-  constructor(min, max, len) {
+  constructor(min, max, playersPerTeam) {
     if (
       typeof min !== 'number' ||
       typeof max !== 'number' ||
-      typeof len !== 'number'
+      typeof playersPerTeam !== 'number'
     )
-      throw new Error('Bin parameters must be numbers');
+      throw new Error('Bin parameters are invalid');
+
+    if (playersPerTeam <= 0)
+      throw new Error('Length of queue cannot be 0 or negative');
+    if (max < min)
+      throw new Error('Max range cannot be smaller than min range');
 
     this.min = min;
     this.max = max;
-    this.format = len;
-    this.qDepth = len * 2;
+    this.format = playersPerTeam;
+    this.qDepth = playersPerTeam * 2;
     this.q = [];
   }
 
@@ -37,21 +42,6 @@ export default class Bin {
 
   getCurLen() {
     return this.q.length;
-  }
-
-  /**
-   * 
-   * @returns 
-   */
-  isFull() {
-    if (this.qDepth !== this.q.length) return false;
-
-    const players = this.q;
-    this.q = [];
-    players.forEach((player) => {
-      player.resetQueueTime();
-    });
-    return players;
   }
 
   getFormat() {
@@ -75,15 +65,12 @@ export default class Bin {
   /**
    * Used to add a player, who starts looking for a match, to the queue.
    * @param {object} player A Player object
-   * @returns {boolean} Add to queue success/failure
+   * @returns Success/failure of adding to queue.
    */
   enqueue(player) {
     if (typeof player !== 'object') return false;
-
     if (this.qDepth === this.q.length) return false;
-
     if (player.rating >= this.max || player.rating < this.min) return false;
-
     if (this.q.find((qPlayer) => qPlayer.name === player.name)) return false;
 
     player.setQueueTime();
@@ -94,15 +81,33 @@ export default class Bin {
   /**
    * Used to remove a player, who stops looking for a match, from the queue.
    * @param {object} player A Player object
-   * @returns {boolean} Remove from queue success/failure
+   * @returns The player, otherwise a false.
    */
   dequeue(player) {
     if (typeof player !== 'object') return false;
-
     if (this.q.length === 0) return false;
 
     const newArray = this.q.filter((qPlayer) => qPlayer.name !== player.name);
     this.q = newArray;
-    return true;
+    player.resetQueueTime(false);
+    return player;
+  }
+
+  /**
+   * Bin is ready to enter match. Return all players in the bin.
+   * If full, empty the bin and return its players.
+   * If not full, return false.
+   * @returns
+   */
+  isFull() {
+    if (this.qDepth !== this.q.length) return false;
+
+    const players = this.q;
+    players.forEach((player) => {
+      player.resetQueueTime(true);
+    });
+
+    this.q = [];
+    return players;
   }
 }
