@@ -4,8 +4,8 @@
 export default class Bin {
   /**
    *
-   * @param {number} min Inclusive minimum value range of a bin.
-   * @param {number} max Exclusive maximum value range of a bin.
+   * @param {number} min Inclusive minimum rating of rating range.
+   * @param {number} max Exclusive maximum rating of rating range.
    * @param {number} len Format of match used for bin.
    */
   constructor(min, max, len) {
@@ -39,12 +39,18 @@ export default class Bin {
     return this.q.length;
   }
 
-  /** returns the whole queue if full */
+  /**
+   * 
+   * @returns 
+   */
   isFull() {
     if (this.qDepth !== this.q.length) return false;
 
     const players = this.q;
     this.q = [];
+    players.forEach((player) => {
+      player.resetQueueTime();
+    });
     return players;
   }
 
@@ -66,6 +72,11 @@ export default class Bin {
     return this.q;
   }
 
+  /**
+   * Used to add a player, who starts looking for a match, to the queue.
+   * @param {object} player A Player object
+   * @returns {boolean} Add to queue success/failure
+   */
   enqueue(player) {
     if (typeof player !== 'object') return false;
 
@@ -73,12 +84,25 @@ export default class Bin {
 
     if (player.rating >= this.max || player.rating < this.min) return false;
 
+    if (this.q.find((qPlayer) => qPlayer.name === player.name)) return false;
+
+    player.setQueueTime();
     this.q.push(player);
     return true;
   }
 
-  /** method may not be necessary */
-  dequeue() {
-    this.q.shift();
+  /**
+   * Used to remove a player, who stops looking for a match, from the queue.
+   * @param {object} player A Player object
+   * @returns {boolean} Remove from queue success/failure
+   */
+  dequeue(player) {
+    if (typeof player !== 'object') return false;
+
+    if (this.q.length === 0) return false;
+
+    const newArray = this.q.filter((qPlayer) => qPlayer.name !== player.name);
+    this.q = newArray;
+    return true;
   }
 }

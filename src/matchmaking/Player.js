@@ -12,6 +12,9 @@ export default class Player {
     this.name = name;
     this.wins = wins;
     this.losses = losses;
+    this.queueTime;
+    this.queueDate;
+    this.qHistory = [];
   }
 
   getName() {
@@ -24,5 +27,31 @@ export default class Player {
 
   getLosses() {
     return this.losses;
+  }
+
+  getQueueTime() {
+    return this.queueTime;
+  }
+
+  getQueueDate() {
+    return this.getQueueDate;
+  }
+
+  setQueueTime() {
+    this.queueDate = new Date();
+    this.queueTime = this.queueDate.getTime();
+  }
+
+  resetQueueTime() {
+    this.writeQueueTime();
+    this.queueDate = undefined;
+    this.queueTime = undefined;
+  }
+
+  writeQueueTime() {
+    this.qHistory.push({
+      queueDate: this.queueDate,
+      queueDur: +new Date - this.queueTime,
+    });
   }
 }
