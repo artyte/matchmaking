@@ -32,7 +32,6 @@ export default class Player {
     this.queueDate;
     this.qHistory = [];
     this.rating = 0;
-    this.calRating();
   }
 
   getName() {
@@ -91,8 +90,10 @@ export default class Player {
     return this.rating;
   }
 
-  calRating() {
-    const rating = this.wins + 100 - this.losses;
-    this.rating = rating;
+  calRating(calculate) {
+    if (typeof calculate !== 'function') return false;
+
+    this.rating = calculate(this.wins, this.losses);
+    return true;
   }
 }

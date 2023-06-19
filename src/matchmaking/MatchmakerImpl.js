@@ -32,9 +32,16 @@ export default class MatchmakerImpl extends Matchmaker {
     return match;
   }
 
+  mmr(wins, losses) {
+    const k = 32;
+    const expectedWins = wins / (wins + losses);
+    const rating = 1500 + k * (expectedWins - 0.5);
+    return rating;
+  }
+
   enterMatchmaking(player) {
     if (typeof player !== 'object') return false;
-    if (!player.getRating()) return false;
+    if (!player.calrating(this.mmr)) return false;
 
     const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
     const result = q.enqueue(player);
