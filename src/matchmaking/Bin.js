@@ -93,20 +93,11 @@ export default class Bin {
     return player;
   }
 
-  /**
-   * Bin is ready to enter match. Return all players in the bin.
-   * If full, empty the bin and return its players.
-   * If not full, return false.
-   * @returns
-   */
+  /** Dequeues a list of players if they are enough to form a match */
   isFull() {
     if (this.qDepth > this.q.length) return false;
 
     const players = this.q.slice(0, this.qDepth);
-    players.forEach((player) => {
-      player.resetQueueTime(true);
-    });
-
     this.q = this.q.slice(this.qDepth);
     return players;
   }

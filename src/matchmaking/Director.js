@@ -1,7 +1,7 @@
 export default class Director {
   constructor(servers) {
     this.servers = new Array(servers).fill(true);
-    this.matches = [[[1, 2, 3]]];
+    this.matches = [];
   }
 
   startMatch(match) {
@@ -13,6 +13,7 @@ export default class Director {
 
     this.servers[room] = false;
     this.matches.push(match.getTeamsOfPlayers());
+    match.start();
     return true;
   }
 
