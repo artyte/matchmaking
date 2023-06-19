@@ -69,7 +69,7 @@ export default class Bin {
    */
   enqueue(player) {
     if (typeof player !== 'object') return false;
-    if (this.qDepth === this.q.length) return false;
+    // if (this.qDepth === this.q.length) return false;
     if (player.rating >= this.max || player.rating < this.min) return false;
     if (this.q.find((qPlayer) => qPlayer.name === player.name)) return false;
 
@@ -100,14 +100,14 @@ export default class Bin {
    * @returns
    */
   isFull() {
-    if (this.qDepth !== this.q.length) return false;
+    if (this.qDepth > this.q.length) return false;
 
-    const players = this.q;
+    const players = this.q.slice(0, this.qDepth);
     players.forEach((player) => {
       player.resetQueueTime(true);
     });
 
-    this.q = [];
+    this.q = this.q.slice(this.qDepth);
     return players;
   }
 }

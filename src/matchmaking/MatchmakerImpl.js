@@ -1,10 +1,17 @@
 import Matchmaker from './Matchmaker';
-import Match from './Match';
+import Bin from './Bin';
 
 /**
  * The matchmaking implementation that you will write.
  */
 export default class MatchmakerImpl extends Matchmaker {
+  constructor(bins) {
+    super();
+    this.bins = bins.map(
+      (min, max, playersPerTeam) => new Bin(min, max, playersPerTeam),
+    );
+  }
+
   findMatch(playersPerTeam) {
     // TODO:
     // player wants to match in a certain team format

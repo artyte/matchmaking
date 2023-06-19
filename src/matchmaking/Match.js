@@ -1,5 +1,6 @@
 export default class Match {
-  constructor(team1, team2) {
+  constructor(team1, team2, id) {
+    this.id = id;
     this.team1 = team1;
     this.team2 = team2;
   }
