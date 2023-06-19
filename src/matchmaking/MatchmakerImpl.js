@@ -13,6 +13,9 @@ export default class MatchmakerImpl extends Matchmaker {
   }
 
   findMatch(playersPerTeam) {
+    if (typeof playersPerTeam !== 'number') return false;
+    if (this.bins[0].getFormat() !== playersPerTeam) return false;
+
     // TODO:
     // player wants to match in a certain team format
     // set playersPerTeam for player
@@ -21,9 +24,11 @@ export default class MatchmakerImpl extends Matchmaker {
   }
 
   enterMatchmaking(player) {
-    // TODO:
-    // player gets accepted by matchmaking algo
-    // player is added to Match
-    // Match's players are all dequeued
+    if (typeof player !== 'object') return false;
+    if (!player.getRating()) return false;
+
+    const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
+    const result = q.enqueue(player);
+    return result;
   }
 }

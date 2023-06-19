@@ -110,4 +110,13 @@ export default class Bin {
     this.q = this.q.slice(this.qDepth);
     return players;
   }
+
+  isInRange(rating) {
+    if (typeof rating !== 'number') return false;
+
+    if (this.min > rating) return false;
+    if (this.max <= rating) return false;
+
+    return true;
+  }
 }

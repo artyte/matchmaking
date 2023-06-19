@@ -1,28 +1,46 @@
 export default class Director {
   constructor(servers) {
-    this.servers = new Array(servers).fill(0);
+    this.servers = new Array(servers).fill(true);
+    this.matches = [[[1, 2, 3]]];
   }
 
   startMatch(match) {
     if (typeof match !== 'object') return false;
-    if (!('id' in match)) return false;
+    // if (!match.getId()) return false;
 
-    const roomsLeft = this.servers.filter((i) => i === 0).length;
-    if (roomsLeft === 0) return false;
+    const room = this.servers.findIndex((i) => i);
+    if (room === -1) return false;
 
-    const room = this.servers.findIndex((i) => i === 0);
-    this.servers[room] = match.id;
+    this.servers[room] = false;
+    this.matches.push(match.getTeamsOfPlayers());
     return true;
   }
 
   endMatch(match) {
     if (typeof match !== 'object') return false;
-    if (!('id' in match)) return false;
+    // if (!match.getId()) return false;
 
-    const room = this.servers.findIndex((i) => i === match.id);
-    if (room === -1) return false;
+    const finished = this.matches.findIndex((room) => {
+      const players = room.flat();
+      const allNames = players.join('');
 
-    this.servers[room] = 0;
+      const queryPlayers = match.getTeamsOfPlayers().flat();
+      const queryNames = queryPlayers.join('');
+
+      return allNames === queryNames;
+    });
+
+    if (finished === -1) return false;
+
+    this.matches.splice(finished, 1);
+    const room = this.servers.findIndex((i) => !i);
+    this.servers[room] = true;
     return true;
+  }
+
+  isPlaying(player) {
+    const players = this.matches.flat(2);
+    const result = players.find((name) => name === player);
+    return result;
   }
 }

@@ -1,6 +1,5 @@
 export default class Match {
-  constructor(team1, team2, id) {
-    this.id = id;
+  constructor(team1, team2) {
     this.team1 = team1;
     this.team2 = team2;
   }
@@ -11,5 +10,13 @@ export default class Match {
 
   getTeam2() {
     return this.team2;
+  }
+
+  getTeamsOfPlayers() {
+    const team1Players = this.team1.map(player => player.getName());
+
+    const team2Players = this.team2.map((player) => player.getName());
+
+    return [team1Players, team2Players];
   }
 }
