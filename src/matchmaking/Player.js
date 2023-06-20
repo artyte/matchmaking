@@ -1,14 +1,9 @@
 /**
  * Representation of a player.
- *
- * As indicated in the challenge description, feel free to augment the Player class in any way that you feel will improve your final matchmaking solution.
- *
- * Do NOT remove the name, wins, or losses fields.
- *
- * Also note that if you make any of these changes, you are responsible for updating the sample-data.json such that it provides a useful data set to exercise your solution.
  */
 export default class Player {
   /**
+   * Instantiated from json file data.
    *
    * @param {string} name Name of player.
    * @param {number} wins Number of wins.
@@ -62,12 +57,18 @@ export default class Player {
     this.losses++;
   }
 
+  /** Used when entering queue */
   setQueueTime() {
     this.queueDate = new Date();
     this.queueTime = this.queueDate.getTime();
   }
 
-  /** adds new queuing history and resets initial queue date and time */
+  /**
+   * Adds new queuing history to allow for subsequent queues.
+   * 
+   * @param {boolean} isMatched Whether player has started a match.
+   * @returns
+   */
   resetQueueTime(isMatched) {
     if (typeof isMatched !== 'boolean') return false;
     if (!this.queueTime) return false;
@@ -90,6 +91,13 @@ export default class Player {
     return this.rating;
   }
 
+  /**
+   * Calls a ratings calculator algo provided by Matchmaker to calculate
+   * Player's rating.
+   * 
+   * @param {function} calculate A callback function.
+   * @returns Ratings or a false boolean if callback fails.
+   */
   calRating(calculate) {
     if (typeof calculate !== 'function') return false;
 

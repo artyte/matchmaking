@@ -3,9 +3,15 @@ import Bin from './Bin';
 import Match from './Match';
 
 /**
- * The matchmaking implementation that you will write.
+ * This matchmaker service implements a variant of elo to caluclate the
+ * rating of a player.
  */
 export default class MatchmakerImpl extends Matchmaker {
+  /**
+   * Instantiate matchmaker with elo-ranged bins.
+   *
+   * @param {Array} bins Array of Bin class objects
+   */
   constructor(bins) {
     super();
     this.bins = bins.map(
@@ -13,6 +19,13 @@ export default class MatchmakerImpl extends Matchmaker {
     );
   }
 
+  /**
+   * Finds 2 teams of players who can be matched and return them as an
+   * unplayed match.
+   *
+   * @param {number} playersPerTeam
+   * @returns 2 matched teams or false boolean
+   */
   findMatch(playersPerTeam) {
     if (typeof playersPerTeam !== 'number') return false;
     if (this.bins[0].getFormat() !== playersPerTeam) return false;
@@ -32,13 +45,31 @@ export default class MatchmakerImpl extends Matchmaker {
     return match;
   }
 
+  /**
+   * elo-type ratings calculator
+   *
+   * @param {number} losses
+   * @param {number} wins
+   * @returns player's rating
+   */
   mmr(wins, losses) {
+    if (typeof wins !== 'number') return false;
+    if (typeof losses !== 'number') return false;
+
     const k = 32;
     const expectedWins = wins / (wins + losses);
     const rating = 1500 + k * (expectedWins - 0.5);
     return rating;
   }
 
+  /**
+   * Adds a player, who is ready to wait for a match, into the matchmaking
+   * queue.
+   *
+   * @param {Player} player A Player object.
+   * @returns boolean true/false for whether the player was added into the
+   * queue.
+   */
   enterMatchmaking(player) {
     if (typeof player !== 'object') return false;
     if (!player.calrating(this.mmr)) return false;

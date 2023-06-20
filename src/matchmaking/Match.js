@@ -1,4 +1,13 @@
+/**
+ * Contains Player objects in 2 arrays, team1 and team2.
+ */
 export default class Match {
+  /**
+   * Instantiate an unplayed match of 2 teams of players.
+   *
+   * @param {Array} team1 Array of Players objects in the first team
+   * @param {Array} team2 Array of Players objects in the second team
+   */
   constructor(team1, team2) {
     this.team1 = team1;
     this.team2 = team2;
@@ -12,14 +21,22 @@ export default class Match {
     return this.team2;
   }
 
-  getTeamsOfPlayers() {
-    const team1Players = this.team1.map((player) => player.getName());
+  /**
+   * Formats team1 and team2 info according to Director's style.
+   *
+   * @param {function} format A callback function.
+   * @returns Formatted info or a false boolean if callback fails.
+   */
+  getTeamsOfPlayers(format) {
+    if (typeof format !== 'function') return false;
 
-    const team2Players = this.team2.map((player) => player.getName());
-
-    return [team1Players, team2Players];
+    const result = format(this.team1, this.team2);
+    return result;
   }
 
+  /**
+   * Start a match by resetting queue time from all players in this match.
+   */
   start() {
     this.team1.forEach((player) => {
       // put it at director
