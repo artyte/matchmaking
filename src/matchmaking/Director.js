@@ -14,8 +14,9 @@ export default class Director {
    */
   constructor(servers) {
     if (typeof servers !== 'number')
-      throw new Error('Servers must be a number');
-
+      throw new Error('servers must be a number');
+    if (servers < 1)
+      throw new Error('servers must be positive');
     this.servers = new Array(servers).fill(true);
     this.matches = []; // each element uses an array of 2 arrays of player names, e.g. [[p1, p2, p3],[p4, p5, p6]] => p1 & p2 & p3 vs p4 & p5 & p6
   }

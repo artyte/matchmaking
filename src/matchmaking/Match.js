@@ -1,3 +1,4 @@
+import Player from './Player';
 /**
  * Contains Player objects in 2 arrays, team1 and team2.
  */
@@ -9,6 +10,16 @@ export default class Match {
    * @param {Array} team2 Array of Players objects in the second team
    */
   constructor(team1, team2) {
+    if (!(team1 instanceof Array)) throw new Error('team1 must be an array');
+    if (!(team2 instanceof Array)) throw new Error('team2 must be an array');
+    team1.forEach((player) => {
+      if (!(player instanceof Player))
+        throw new Error('Each player of team1 must be of type Player');
+    });
+    team2.forEach((player) => {
+      if (!(player instanceof Player))
+        throw new Error('Each player of team1 must be of type Player');
+    });
     this.team1 = team1;
     this.team2 = team2;
   }

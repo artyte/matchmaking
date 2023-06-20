@@ -14,6 +14,11 @@ export default class MatchmakerImpl extends Matchmaker {
    */
   constructor(bins) {
     super();
+    if (!(bins instanceof Array)) throw new Error('bins must be an array');
+    bins.forEach((bin) => {
+      if (!(bin instanceof Bin))
+        throw new Error('Each bin in bins must be of type Bin');
+    });
     this.bins = bins.map(
       (min, max, playersPerTeam) => new Bin(min, max, playersPerTeam),
     );
