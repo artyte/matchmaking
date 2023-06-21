@@ -33,3 +33,38 @@ Last but not least, your solution should be "production-ready", so consider:
 - tests (unit / integration / coverage)
 
 We've also provided you a Maven/Java project template as a starting point to create your matchmaking system but **feel free to disregard it and propose your own flavor. Use the tech stack of your choice that will allow you to better demonstrate your craft/mastery**.
+
+
+## Pre-Requisite
+
+**Please use the following guide to install your tools for the OS of your choice**
+### Linux
+Using CLI:
+```
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+nvm install node
+```
+
+### Mac
+using CLI:
+```
+curl -L https://bit.ly/n-install | bash
+sudo n latest
+```
+
+### Windows
+Using GUI:
+Download and install from [this link](https://nodejs.org/dist/v20.2.0/node-v20.2.0-x64.msi)
+
+
+## Building App
+To build the app, simply run these commands in your terminal of choice:
+```
+<!-- for linux/mac -->
+npm run build
+
+<!-- for windows -->
+npm run build-windows
+```
+
+This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.

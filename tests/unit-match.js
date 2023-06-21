@@ -1,9 +1,11 @@
 import Match from '../src/matchmaking/Match';
-// var Match = require('../src/matchmaking/Match');
+import Player from '../src/matchmaking/Player';
+import { expect } from '@jest/globals';
 
-describe('Match', () => {
-  it('should give team1', () => {
-    const match = new Match('abc', '123');
-    expect(match.getTeam1()).toBe('abc');
+describe('A Match', () => {
+  it('should not initialize', () => {
+    // invalid parameter type
+    expect(() => new Match('asd', 'asd')).toThrow();
+    expect(() => new Match([[1]], [[1]])).toThrow();
   });
 });
