@@ -53,6 +53,8 @@ export default class Client {
 
     const pIndex = Math.floor(Math.random() * this.idle.length);
     const player = this.idle[pIndex];
+    if (!player) return false;
+
     this.idle.splice(pIndex, 1);
     this.wait.push(player);
 
@@ -139,23 +141,4 @@ export default class Client {
       );
     });
   }
-
-  // getLoad() {
-  //   this.idle.forEach((player) => {
-  //     player.calRating(this.mmr);
-  //     const name = player.getName();
-  //     const elo = player.getRating()
-
-  //     console.log(`Name: ${name}, Elo: ${elo}`);
-  //   });
-  // }
-  // mmr(wins, losses) {
-  //   if (typeof wins !== 'number') return false;
-  //   if (typeof losses !== 'number') return false;
-
-  //   const k = 1000;
-  //   const expectedWins = wins / (wins + losses);
-  //   const rating = expectedWins? 1500 + k * (expectedWins - 0.5) : 1500;
-  //   return rating;
-  // }
 }

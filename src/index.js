@@ -24,8 +24,15 @@ const matchMaker = new MatchmakerImpl(bins);
 
 const activeMatches = [];
 setInterval(() => {
-  console.log('Client queueing a player...');
-  client.queue(matchMaker);
+  console.log('Client finding a player to queue...');
+  const queuable = client.queue(matchMaker);
+
+  if (!queuable) {
+    console.log('No players to queue!');
+    return;
+  }
+
+  console.log('Client queueing a player');
 }, queueClients);
 
 setInterval(() => {
