@@ -1,6 +1,7 @@
 import Matchmaker from './Matchmaker';
 import Bin from './Bin';
 import Match from './Match';
+import Player from './Player';
 
 /**
  * This matchmaker service implements a variant of elo to caluclate the
@@ -76,7 +77,7 @@ export default class MatchmakerImpl extends Matchmaker {
    * queue.
    */
   enterMatchmaking(player) {
-    if (typeof player !== 'object') return false;
+    if (!(player instanceof Player)) return false;
     if (!player.calrating(this.mmr)) return false;
 
     const q = this.bins.find((bin) => bin.isInRange(player.getRating()));

@@ -1,3 +1,5 @@
+import Player from './Player';
+
 /**
  * Foundation used to make queues with ratings range.
  * Also doubles as a stats collector to be shown as the end result of
@@ -6,7 +8,7 @@
 export default class Bin {
   /**
    * Bin configs:
-   * 
+   *
    * @param {number} min Inclusive minimum rating of rating range.
    * @param {number} max Exclusive maximum rating of rating range.
    * @param {number} playersPerTeam Format of match used for bin.
@@ -29,6 +31,7 @@ export default class Bin {
     this.format = playersPerTeam;
     this.qDepth = playersPerTeam * 2;
     this.q = [];
+    this.ratingDif = [];
   }
 
   getMin() {
@@ -67,12 +70,12 @@ export default class Bin {
 
   /**
    * Used to add a player, who starts looking for a match, to the queue.
-   * 
+   *
    * @param {object} player A Player object
    * @returns Success/failure of adding to queue.
    */
   enqueue(player) {
-    if (typeof player !== 'object') return false;
+    if (!(player instanceof Player)) return false;
     if (player.rating >= this.max || player.rating < this.min) return false;
     if (this.q.find((qPlayer) => qPlayer.name === player.name)) return false;
 
@@ -83,12 +86,12 @@ export default class Bin {
 
   /**
    * Used to remove a player, who stops looking for a match, from the queue.
-   * 
+   *
    * @param {object} player A Player object
    * @returns The player, otherwise a false boolean.
    */
   dequeue(player) {
-    if (typeof player !== 'object') return false;
+    if (!(player instanceof Player)) return false;
     if (this.q.length === 0) return false;
 
     const newArray = this.q.filter((qPlayer) => qPlayer.name !== player.name);
@@ -101,7 +104,7 @@ export default class Bin {
    * Checks if queue has enough players to make a match and returns the
    * necessary amount of players to form a team. Players are removed by
    * order of who queued first.
-   * 
+   *
    * @returns An array of Player objects or a false boolean.
    */
   isFull() {
@@ -114,8 +117,8 @@ export default class Bin {
 
   /**
    * Checks whether a player's rating is within range of this bin's.
-   * 
-   * @param {number} rating 
+   *
+   * @param {number} rating
    * @returns a true/false boolean.
    */
   isInRange(rating) {

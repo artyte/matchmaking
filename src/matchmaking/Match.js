@@ -50,12 +50,10 @@ export default class Match {
    */
   start() {
     this.team1.forEach((player) => {
-      // put it at director
       player.resetQueueTime(true);
     });
 
     this.team2.forEach((player) => {
-      // put it at director
       player.resetQueueTime(true);
     });
   }

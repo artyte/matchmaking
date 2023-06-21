@@ -1,3 +1,6 @@
+import Match from './Match';
+import Player from './Player';
+
 /**
  * Takes from the Matchmaker class's returned matches and assigns them
  * to a server.
@@ -15,8 +18,7 @@ export default class Director {
   constructor(servers) {
     if (typeof servers !== 'number')
       throw new Error('servers must be a number');
-    if (servers < 1)
-      throw new Error('servers must be positive');
+    if (servers < 1) throw new Error('servers must be positive');
     this.servers = new Array(servers).fill(true);
     this.matches = []; // each element uses an array of 2 arrays of player names, e.g. [[p1, p2, p3],[p4, p5, p6]] => p1 & p2 & p3 vs p4 & p5 & p6
   }
@@ -29,7 +31,7 @@ export default class Director {
    * was successful.
    */
   startMatch(match) {
-    if (typeof match !== 'object') return false;
+    if (!(match instanceof Match)) return false;
 
     const room = this.servers.findIndex((i) => i);
     if (room === -1) return false;
@@ -51,8 +53,14 @@ export default class Director {
    * @returns An Array of 2 team of players' names or a false boolean.
    */
   matchArrayify(team1, team2) {
-    if (typeof team1 !== 'object') return false;
-    if (typeof team2 !== 'object') return false;
+    if (!(team1 instanceof Array)) return false;
+    if (!(team2 instanceof Array)) return false;
+    team1.forEach((player) => {
+      if (!(player instanceof Player)) return false;
+    });
+    team2.forEach((player) => {
+      if (!(player instanceof Player)) return false;
+    });
 
     const team1Players = team1.map((player) => player.getName());
     const team2Players = team2.map((player) => player.getName());
@@ -73,7 +81,7 @@ export default class Director {
    * was successful.
    */
   endMatch(match) {
-    if (typeof match !== 'object') return false;
+    if (!(match instanceof Match)) return false;
 
     const finished = this.matches.findIndex((room) => {
       const players = room.flat();
@@ -99,6 +107,7 @@ export default class Director {
    * @returns A true/false boolean.
    */
   isPlaying(player) {
+    if (!(player instanceof Player)) return false;
     const players = this.matches.flat(2);
     const result = players.find((name) => name === player);
     return result;

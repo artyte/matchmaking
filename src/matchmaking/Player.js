@@ -26,7 +26,7 @@ export default class Player {
     this.queueTime;
     this.queueDate;
     this.qHistory = [];
-    this.rating = 0;
+    this.rating;
   }
 
   getName() {

@@ -1,5 +1,7 @@
 import Player from './Player';
 import fs from 'fs';
+import MatchmakerImpl from './MatchmakerImpl';
+import Director from './Director';
 
 /**
  * Since writing a script to manage clients would be complicated, this
@@ -41,11 +43,13 @@ export default class Client {
   /**
    * Using any matchmaker implementation, add a player into matchmaking.
    * Adding them would move them from the idle queue to the wait queue.
-   * 
+   *
    * @param {Matchmaker} matchmakerImpl A Matchmaker child object.
    * @returns A true/false boolean for entering matchmaking.
    */
   queue(matchmakerImpl) {
+    if (!(matchmakerImpl instanceof MatchmakerImpl)) return false;
+
     const pIndex = Math.floor(Math.random() * this.idle.length);
     const player = this.idle[pIndex];
     this.idle.splice(pIndex, 1);
@@ -57,10 +61,13 @@ export default class Client {
 
   /**
    * Checks players' status and move them into the appropriate queue.
-   * 
+   *
    * @param {Director} director A Director object.
+   * @returns A true/false boolean for polling player status.
    */
   poll(director) {
+    if (!(director instanceof Director)) return false;
+
     // move players who finished playing to idle queue
     this.play
       .map((player) => {
@@ -82,5 +89,7 @@ export default class Client {
         return false;
       })
       .filter((player) => player);
+
+    return true;
   }
 }
