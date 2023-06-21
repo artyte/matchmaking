@@ -66,10 +66,10 @@ export default class Director {
     const team1Players = team1.map((player) => player.getName());
     const team2Players = team2.map((player) => player.getName());
 
-    var result = team1Players.findIndex((player) => !player);
-    if (result) return false;
+    let result = team1Players.findIndex((player) => !player);
+    if (result !== -1) return false;
     result = team2Players.findIndex((player) => !player);
-    if (result) return false;
+    if (result !== -1) return false;
 
     return [team1Players, team2Players];
   }
@@ -88,7 +88,7 @@ export default class Director {
       const players = room.flat();
       const allNames = players.join('');
 
-      const queryPlayers = match.getTeamsOfPlayers().flat();
+      const queryPlayers = match.getTeamsOfPlayers(this.matchArrayify).flat();
       const queryNames = queryPlayers.join('');
 
       return allNames === queryNames;
