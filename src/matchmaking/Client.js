@@ -2,6 +2,7 @@ import Player from './Player';
 import fs from 'fs';
 import MatchmakerImpl from './MatchmakerImpl';
 import Director from './Director';
+import Bin from './Bin';
 
 /**
  * Since writing a script to manage clients would be complicated, this
@@ -91,6 +92,52 @@ export default class Client {
       .filter((player) => player);
 
     return true;
+  }
+
+  /**
+   * Prints out stats of the matchmaking service
+   * @param {Array} bins An array of bin config values
+   * @returns 
+   */
+  printStats(bins) {
+    if (!(bins instanceof Array)) return false;
+
+    const allBins = bins.map(
+      ([min, max, playersPerTeam]) => new Bin(min, max, playersPerTeam),
+    );
+    const allPlayers = [...this.idle, ...this.wait, ...this.play];
+
+    allPlayers.forEach((player) => {
+      const bin = allBins.find((bin) => bin.isInRange(player.getRating()));
+
+      const qHistory = player.getQueueHistory();
+      qHistory.forEach(({ queueDur, tightness }) => {
+        bin.addQTimes(queueDur);
+        bin.addTightness(tightness);
+      });
+    });
+
+    // eslint-disable-next-line no-console
+    console.log('Matchmaking Stats------------------------------------------------------------------------->');
+    allBins.forEach((bin) => {
+      const queueTimes = bin.getQTimes();
+      const avgQtime =
+        queueTimes.reduce((a, b) => a + b, 0) / (queueTimes.length * 1000) || 0;
+      const printQTime = avgQtime.toFixed(2);
+
+      const tightness = bin.getTightness();
+      const matches = tightness.length / bin.getMaxLen() || 0;
+      const avgTightness = tightness.reduce((a, b) => a + b, 0) / matches || 0;
+      const printTightness = avgTightness.toFixed(2);
+
+      const maxRating = bin.getMax();
+      const minRating = bin.getMin();
+
+      // eslint-disable-next-line no-console
+      console.log(
+        `Rating: ${minRating} - ${maxRating}, No. Of Matches: ${matches}, Avg. Wait Time: ${printQTime}s, Avg. MMR Tightness: ${printTightness}`,
+      );
+    });
   }
 
   // getLoad() {

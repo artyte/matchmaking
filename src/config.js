@@ -17,7 +17,8 @@ export const bins = [
 export const serverNum = 1;
 export const filePath = options.file ? options.file : './data/sample-data.json';
 
-export const queueClients = 1000;
-export const matchClients = 5000;
-export const endClientMatches = 10000;
-export const updateClientPlayers = 1000;
+const microSecondScalar = 1000;
+export const queueClients = 1 * microSecondScalar;
+export const matchClients = 5 * microSecondScalar;
+export const endClientMatches = 10 * microSecondScalar;
+export const updateClientPlayers = 1 * microSecondScalar;

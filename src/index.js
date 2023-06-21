@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-// import readline from 'readline';
-// import process from 'node:process';
 import {
   bins,
   serverNum,
@@ -40,9 +38,10 @@ setInterval(() => {
 
   const assign = director.startMatch(match);
   if (assign) {
+    console.log('Starting match:');
     activeMatches.push(match);
     console.log(match);
-    console.log('Match starting...');
+    console.log('Match started...');
     return;
   }
 
@@ -61,7 +60,7 @@ setInterval(() => {
     return;
   }
 
-  console.log('Ending a match...');
+  console.log('Ending match:');
   const ended = director.endMatch(match);
   if (ended) {
     console.log(match);
@@ -74,7 +73,9 @@ setInterval(() => {
   client.poll(director);
 }, updateClientPlayers);
 
+process.on('SIGINT', () => {
+  console.log('Program ended. Calculating matchmaking stats...')
+  client.printStats(bins);
 
-// process.on('exit', (code) => {
-//   console.log(`Shows stats here`);
-// });
+  process.exit();
+});

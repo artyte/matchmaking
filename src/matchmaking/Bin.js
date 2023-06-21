@@ -32,14 +32,47 @@ export default class Bin {
     this.qDepth = playersPerTeam * 2;
     this.q = [];
     this.ratingDif = [];
+    this.qTimes = [];
+  }
+
+  getQTimes() {
+    return this.qTimes;
+  }
+
+  getTightness() {
+    return this.ratingDif;
+  }
+
+  /**
+   * Adds mmr tightness ratings to this bin.
+   * @param {number} ratingDif An mmr tightness rating from a player
+   * @returns True/false boolean for adding tightness
+   */
+  addTightness(ratingDif) {
+    if (typeof ratingDif !== 'number') return false;
+
+    this.ratingDif.push(ratingDif);
+    return true;
+  }
+
+  /**
+   * Adds wait time to this bin.
+   * @param {number} qTime  A waiting time in queue from a player
+   * @returns True/false boolean for adding wait time
+   */
+  addQTimes(qTime) {
+    if (typeof qTime !== 'number') return false;
+
+    this.qTimes.push(qTime);
+    return true;
   }
 
   getMin() {
-    return this.name;
+    return this.min;
   }
 
   getMax() {
-    return this.wins;
+    return this.max;
   }
 
   getMaxLen() {
