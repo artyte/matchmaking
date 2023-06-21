@@ -9,7 +9,7 @@ export default class Player {
    * @param {number} wins Number of wins.
    * @param {number} losses Number of losses.
    */
-  constructor(name, wins, losses) {
+  constructor(name, wins = 0, losses = 0) {
     if (
       typeof name !== 'string' ||
       typeof wins !== 'number' ||

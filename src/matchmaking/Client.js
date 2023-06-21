@@ -33,7 +33,7 @@ export default class Client {
     const data = JSON.parse(raw);
 
     this.idle = data.map(
-      (name, wins, losses) => new Player(name, wins, losses),
+      ({ name, wins, losses }) => new Player(name, wins, losses),
     );
 
     this.wait = [];
@@ -92,4 +92,23 @@ export default class Client {
 
     return true;
   }
+
+  // getLoad() {
+  //   this.idle.forEach((player) => {
+  //     player.calRating(this.mmr);
+  //     const name = player.getName();
+  //     const elo = player.getRating()
+
+  //     console.log(`Name: ${name}, Elo: ${elo}`);
+  //   });
+  // }
+  // mmr(wins, losses) {
+  //   if (typeof wins !== 'number') return false;
+  //   if (typeof losses !== 'number') return false;
+
+  //   const k = 1000;
+  //   const expectedWins = wins / (wins + losses);
+  //   const rating = expectedWins? 1500 + k * (expectedWins - 0.5) : 1500;
+  //   return rating;
+  // }
 }

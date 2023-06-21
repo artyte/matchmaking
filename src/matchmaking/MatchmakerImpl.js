@@ -11,17 +11,13 @@ export default class MatchmakerImpl extends Matchmaker {
   /**
    * Instantiate matchmaker with elo-ranged bins.
    *
-   * @param {Array} bins Array of Bin class objects
+   * @param {Array} bins Array of array of bin configs
    */
   constructor(bins) {
     super();
     if (!(bins instanceof Array)) throw new Error('bins must be an array');
-    bins.forEach((bin) => {
-      if (!(bin instanceof Bin))
-        throw new Error('Each bin in bins must be of type Bin');
-    });
     this.bins = bins.map(
-      (min, max, playersPerTeam) => new Bin(min, max, playersPerTeam),
+      ([min, max, playersPerTeam]) => new Bin(min, max, playersPerTeam),
     );
   }
 
@@ -62,9 +58,9 @@ export default class MatchmakerImpl extends Matchmaker {
     if (typeof wins !== 'number') return false;
     if (typeof losses !== 'number') return false;
 
-    const k = 32;
+    const k = 1000;
     const expectedWins = wins / (wins + losses);
-    const rating = 1500 + k * (expectedWins - 0.5);
+    const rating = expectedWins ? 1500 + k * (expectedWins - 0.5) : 1500;
     return rating;
   }
 
