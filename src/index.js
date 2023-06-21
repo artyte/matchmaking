@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { program } from 'commander';
 import path from 'path';
-import readline from 'readline';
+// import readline from 'readline';
+import process from 'node:process';
 import Client from './matchmaking/Client';
 import Director from './matchmaking/Director';
 import MatchmakerImpl from './matchmaking/MatchmakerImpl';
@@ -14,8 +15,8 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-var client;
-var truePath = './data';
+let client;
+let truePath = './data';
 if (options.file) {
   console.log(`Loading file data:${options.file}...`);
   truePath = options.file;
@@ -31,7 +32,7 @@ console.log('Creating servers...');
 const director = new Director(100);
 
 console.log('Creating matchmaker...');
-var playersPerTeam;
+let playersPerTeam;
 if (options.match && ['3', '5'].includes(options.match)) {
   console.log(`Using ${options.match} match format`);
   playersPerTeam = Number(options.match);
@@ -45,28 +46,33 @@ const bins = [
   [1000, 1300, playersPerTeam],
   [1300, 1500, playersPerTeam],
   [1500, 1700, playersPerTeam],
-  [1700, 2000, playersPerTeam],
+  [1700, 2001, playersPerTeam],
 ];
 const matchMaker = new MatchmakerImpl(bins);
 
-process.on('exit', () => {
-  console.log('Exited!');
+setInterval(() => {
+  console.log('Client queueing a player...');
+  client.queue(matchMaker);
+}, 1000);
+
+setInterval(() => {
+  console.log('Finding a match...');
+  const match = matchMaker.findMatch(playersPerTeam);
+  // if (!match) console.log('Not enough players...');
+  // else {
+  //   const assign = director.startMatch(match);
+  //   if (assign) console.log('Match starting...');
+  //   else {
+  //     console.log('No available servers, going back to queue...');
+  //     const team1 = match.getTeam1();
+  //     const team2 = match.getTeam2();
+  //     team1.forEach((player) => matchMaker.backToMatchmaking(player));
+  //     team2.forEach((player) => matchMaker.backToMatchmaking(player));
+  //   }
+  // }
+  console.log(match);
+}, 5000);
+
+process.on('exit', (code) => {
+  console.log(`About to exit with code: ${code}`);
 });
-process.stdin.setRawMode(true);
-process.stdin.resume();
-process.stdin.on('data', process.exit.bind(process, 0));
-
-// process.on('exit', () => {
-//   console.log('Exited!');
-// });
-// readline.emitKeypressEvents(process.stdin);
-// process.stdin.setRawMode(true);
-// process.stdin.resume();
-// process.stdin.on('keypress', process.exit(1));
-// const init = async () => {
-//   while (true) {
-//     console.log('In while loop');
-//   }
-// };
-
-// init();

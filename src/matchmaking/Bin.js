@@ -60,12 +60,28 @@ export default class Bin {
       max: this.max,
       maxLen: this.qDepth,
       curLen: this.q.length,
-      len: this.format,
+      format: this.format,
     };
   }
 
   getBin() {
     return this.q;
+  }
+
+  /**
+   * Used to add a player back to the queue after a failed Director
+   * assignment.
+   *
+   * @param {object} player A Player object
+   * @returns Success/failure of adding to queue.
+   */
+  gofirst(player) {
+    if (!(player instanceof Player)) return false;
+    if (player.rating >= this.max || player.rating < this.min) return false;
+    if (this.q.find((qPlayer) => qPlayer.name === player.name)) return false;
+
+    this.q.unshift(player);
+    return true;
   }
 
   /**

@@ -21,6 +21,7 @@ export default class Director {
     if (servers < 1) throw new Error('servers must be positive');
     this.servers = new Array(servers).fill(true);
     this.matches = []; // each element uses an array of 2 arrays of player names, e.g. [[p1, p2, p3],[p4, p5, p6]] => p1 & p2 & p3 vs p4 & p5 & p6
+    this.waiting = [];
   }
 
   /**
@@ -36,10 +37,10 @@ export default class Director {
     const room = this.servers.findIndex((i) => i);
     if (room === -1) return false;
 
-    this.servers[room] = false;
     const teamsOfPlayers = match.getTeamsOfPlayers(this.matchArrayify);
     if (!teamsOfPlayers) return false;
 
+    this.servers[room] = false;
     this.matches.push(teamsOfPlayers);
     match.start();
     return true;

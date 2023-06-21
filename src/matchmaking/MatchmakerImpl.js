@@ -74,10 +74,30 @@ export default class MatchmakerImpl extends Matchmaker {
    */
   enterMatchmaking(player) {
     if (!(player instanceof Player)) return false;
+    if (!player.calRating(this.mmr)) return false;
+
+    const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
+
+    console.log(`Player rating: ${player.getRating()}`);
+    console.log(q.getConfig());
+    const result = q.enqueue(player);
+    return result;
+  }
+
+  /**
+   * Adds a player, who was failed to be assigned to a server, back into the
+   * matchmaking queue.
+   *
+   * @param {Player} player A Player object.
+   * @returns boolean true/false for whether the player was added into the
+   * queue.
+   */
+  backToMatchmaking(player) {
+    if (!(player instanceof Player)) return false;
     if (!player.calrating(this.mmr)) return false;
 
     const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
-    const result = q.enqueue(player);
+    const result = q.gofirst(player);
     return result;
   }
 }
