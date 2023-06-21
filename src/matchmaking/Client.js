@@ -129,7 +129,8 @@ export default class Client {
 
       const tightness = bin.getTightness();
       const matches = tightness.length / bin.getMaxLen() || 0;
-      const avgTightness = tightness.reduce((a, b) => a + b, 0) / matches || 0;
+      const avgTightness =
+        tightness.reduce((a, b) => a + b, 0) / tightness.length || 0;
       const printTightness = avgTightness.toFixed(2);
 
       const maxRating = bin.getMax();
