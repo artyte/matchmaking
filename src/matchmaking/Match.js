@@ -49,12 +49,23 @@ export default class Match {
    * Start a match by resetting queue time from all players in this match.
    */
   start() {
+    const ratings = [];
     this.team1.forEach((player) => {
-      player.resetQueueTime(true);
+      ratings.push(player.getRating());
+    });
+    this.team2.forEach((player) => {
+      ratings.push(player.getRating());
+    });
+
+    const min = Math.min(...ratings);
+    const max = Math.max(...ratings);
+    const diff = max - min;
+    this.team1.forEach((player) => {
+      player.resetQueueTime(true, diff);
     });
 
     this.team2.forEach((player) => {
-      player.resetQueueTime(true);
+      player.resetQueueTime(true, diff);
     });
   }
 }

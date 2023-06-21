@@ -65,11 +65,13 @@ export default class Player {
 
   /**
    * Adds new queuing history to allow for subsequent queues.
-   * 
+   *
    * @param {boolean} isMatched Whether player has started a match.
+   * @param {number} ratingDif MMR Tightness of a match. -1 means match was
+   * was never allocated.
    * @returns
    */
-  resetQueueTime(isMatched) {
+  resetQueueTime(isMatched, ratingDif = -1) {
     if (typeof isMatched !== 'boolean') return false;
     if (!this.queueTime) return false;
 
@@ -77,6 +79,7 @@ export default class Player {
       queueDate: this.queueDate,
       queueDur: +new Date() - this.queueTime,
       matched: isMatched,
+      tightness: ratingDif,
     });
 
     this.queueDate = undefined;
@@ -94,7 +97,7 @@ export default class Player {
   /**
    * Calls a ratings calculator algo provided by Matchmaker to calculate
    * Player's rating.
-   * 
+   *
    * @param {function} calculate A callback function.
    * @returns Ratings or a false boolean if callback fails.
    */
