@@ -14,11 +14,11 @@ export const bins = [
   [1500, 1700, playersPerTeam],
   [1700, 2001, playersPerTeam],
 ];
-export const serverNum = 1;
+export const serverNum = 10;
 export const filePath = options.file ? options.file : './data/sample-data.json';
 
 const microSecondScalar = 1000;
 export const queueClients = 1 * microSecondScalar;
-export const matchClients = 5 * microSecondScalar;
-export const endClientMatches = 10 * microSecondScalar;
-export const updateClientPlayers = 1 * microSecondScalar;
+export const matchClients = 2 * microSecondScalar;
+export const endClientMatches = 60 * microSecondScalar;
+export const updateClientPlayers = 2 * microSecondScalar;

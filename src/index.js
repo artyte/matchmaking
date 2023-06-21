@@ -74,7 +74,7 @@ setInterval(() => {
 }, updateClientPlayers);
 
 process.on('SIGINT', () => {
-  console.log('Program ended. Calculating matchmaking stats...')
+  console.log('Program ended. Calculating matchmaking stats...');
   client.printStats(bins);
 
   process.exit();
