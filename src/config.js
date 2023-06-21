@@ -19,16 +19,5 @@ export const filePath = options.file ? options.file : './data/sample-data.json';
 
 export const queueClients = 1000;
 export const matchClients = 5000;
-export const endAndPoll = 10000;
-
-console.log(playersPerTeam, bins, filePath);
-// export const makeBins = (playersPerTeam = 3) => {
-//   const bins = [
-//     [0, 1000, playersPerTeam],
-//     [1000, 1300, playersPerTeam],
-//     [1300, 1500, playersPerTeam],
-//     [1500, 1700, playersPerTeam],
-//     [1700, 2001, playersPerTeam],
-//   ];
-//   return bins;
-// };
+export const endClientMatches = 10000;
+export const updateClientPlayers = 1000;

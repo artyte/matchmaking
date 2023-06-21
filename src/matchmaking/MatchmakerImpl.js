@@ -32,7 +32,7 @@ export default class MatchmakerImpl extends Matchmaker {
     if (typeof playersPerTeam !== 'number') return false;
     if (this.bins[0].getFormat() !== playersPerTeam) return false;
 
-    var match;
+    let match;
     this.bins.some((bin) => {
       const players = bin.isFull();
       if (!players) return false;
