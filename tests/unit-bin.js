@@ -71,4 +71,53 @@ describe('A bin', () => {
     queue.push(player2);
     expect(result).toEqual(queue); //returned match is contains player1 and player2
   });
+
+  it('is not in range of player\'s rating', () => {
+    // invalid parameter type
+    let bin = new Bin(1000, 2000, 1);
+    let result = bin.isInRange('123');
+    expect(result).toBe(false);
+
+    // parameter value not in range
+    result = bin.isInRange(123);
+    expect(result).toBe(false);
+    result = bin.isInRange(12223);
+    expect(result).toBe(false);
+  });
+
+  it('cannot add back a player', () => {
+    // invalid parameter type
+    let bin = new Bin(1000, 2000, 1);
+    let result = bin.gofirst('123');
+    expect(result).toBe(false);
+
+    // player not in range
+    bin = new Bin(1900, 2000, 1);
+    let player1 = new Player('player1', 0, 100);
+    player1.rating = 1000;
+    result = bin.gofirst(player1);
+    expect(result).toBe(false);
+
+    // player added twice
+    bin = new Bin(1000, 2000, 1);
+    player1 = new Player('player1', 0, 100);
+    player1.rating = 1000;
+    bin.gofirst(player1);
+    result = bin.gofirst(player1);
+    expect(result).toBe(false);
+  });
+
+  it('cannot add tightness', () => {
+    // invalid parameter type
+    let bin = new Bin(1000, 2000, 1);
+    let result = bin.addTightness('123');
+    expect(result).toBe(false);
+  });
+
+  it('cannot add queue times', () => {
+    // invalid parameter type
+    let bin = new Bin(1000, 2000, 1);
+    let result = bin.addQTimes('123');
+    expect(result).toBe(false);
+  });
 });
