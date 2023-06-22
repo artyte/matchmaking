@@ -1,35 +1,154 @@
-# Riot Games HKG Studio
+# Matchmaking Service
 
-## Context
+## Purpose
 
-Riot Games HKG Studio coding challenge.
+This project attempts to simulate a competitive online team-based game's matchmaking service and records and shows the average waiting time and rating tightness of each rating bin.
 
-## Problem Statement
+The codebase allows the following customizations:
+1. Creating new matchmaking algorithms through inherting base `Matchmaker` Class
+2. Customizing bin ratings and number of bins for matchmaking in `config.js`
+3. Customizing app values by suppling them as options in the cli
+4. Run tests (unit/coverage) on any exportable files using `./tests/files`
 
-Let's pretend that we’ve created a new competitive online team-based game ;)
+## Architecture
 
-Players of different skills levels will play the game, so we’ll need to match them in a way that keeps the game fun and fair. We want to match players based on their individual skill level and ensure teams are balanced. We're not expecting each matchup to be perfect (especially not at first), but we want the matchmaking system to eventually get smarter and accurately match players on teams.
+This project uses inspirations from [open-match's architecture](https://open-match.dev/site/images/demo-match-sequence.png) as well as [apex's matchmaking](https://www.ea.com/games/apex-legends/news/matchmaking-2023) to create some of the base classes. The following image shows the simulated architecture of this project:
 
-Your challenge is to code a comprehensive matchmaking system in any technology you feel comfortable with. Your solution will repeatedly draw a set number of players from a larger pool and match them into teams. Players will enter the matchmaking process as solo participants, so your system should create balanced 3v3, 5v5, etc. teams.
+![Architecture](https://github.com/artyte/matchmaking/raw/dev/architecture.png)
 
-We’ve provided you with sample data in JSON for a pool of 200 players that includes their names, total wins and total losses. We’re happy to toss additional info into the matchmaking mix, so go ahead and invent a new data field and use that in your code if you’re feeling extra ambitious.
+## Pre-Requisite
 
-## Criteria
+**Please use the following guide to install your tools for the OS of your choice**
+### Linux
+Using CLI:
+```
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+nvm install node
+```
 
-An engineer will take whatever you submit and test it, so make sure your solution:
+### Mac
+using CLI:
+```
+curl -L https://bit.ly/n-install | bash
+sudo n latest
+```
 
-- is documented
-- contains the source code
-- will compile as submitted
-- runs on any machine/OS
-- is easy to test ;)
+### Windows
+Using GUI:
+Download and install from [this link](https://nodejs.org/dist/v20.2.0/node-v20.2.0-x64.msi)
 
-Ideally, we want a flexible system that’ll allow us to edit the matchmaking rules and test out different strategies without extensive engineering efforts.
 
-Last but not least, your solution should be "production-ready", so consider:
+## Building App
+To build the app, simply run these commands in your terminal of choice:
+```
+<!-- for linux/mac -->
+npm run build
 
-- best practices and principles
-- build scripts
-- tests (unit / integration / coverage)
+<!-- for windows -->
+npm run build-windows
+```
 
-We've also provided you a Maven/Java project template as a starting point to create your matchmaking system but **feel free to disregard it and propose your own flavor. Use the tech stack of your choice that will allow you to better demonstrate your craft/mastery**.
+This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.
+
+## Running App
+To run app on linux:
+```
+<!-- default values -->
+./dist/matchmake-linux
+
+<!-- user guide -->
+./dist/matchmake-linux -h
+
+<!-- using another sample data file -->
+./dist/matchmake-linux -f /your/file.json
+
+<!-- selecting 5v5 -->
+./dist/matchmake-linux -t 5
+
+<!-- using custom number of servers -->
+./dist/matchmake-linux -s 100
+
+<!-- finding clients to queue every 1 second -->
+./dist/matchmake-linux -q 1
+
+<!-- find a match every 1 second -->
+./dist/matchmake-linux -m 1
+
+<!-- update client status every 0.1 -->
+./dist/matchmake-linux -u 0.1
+
+<!-- end a match every 1 second -->
+./dist/matchmake-linux -e 1
+```
+
+To run app on macos:
+```
+<!-- default values -->
+./dist/matchmake-macos
+
+<!-- user guide -->
+./dist/matchmake-macos -h
+
+<!-- using another sample data file -->
+./dist/matchmake-macos -f /your/file.json
+
+<!-- selecting 5v5 -->
+./dist/matchmake-macos -t 5
+
+<!-- using custom number of servers -->
+./dist/matchmake-macos -s 100
+
+<!-- finding clients to queue every 1 second -->
+./dist/matchmake-macos -q 1
+
+<!-- find a match every 1 second -->
+./dist/matchmake-macos -m 1
+
+<!-- update client status every 0.1 -->
+./dist/matchmake-macos -u 0.1
+
+<!-- end a match every 1 second -->
+./dist/matchmake-macos -e 1
+```
+
+To run app on windows:
+```
+<!-- default values -->
+dist\matchmake.exe
+
+<!-- user guide -->
+dist\matchmake.exe -h
+
+<!-- using another sample data file -->
+dist\matchmake.exe -f /your/file.json
+
+<!-- selecting 5v5 -->
+dist\matchmake.exe -t 5
+
+<!-- using custom number of servers -->
+dist\matchmake.exe -s 100
+
+<!-- finding clients to queue every 1 second -->
+dist\matchmake.exe -q 1
+
+<!-- find a match every 1 second -->
+dist\matchmake.exe -m 1
+
+<!-- update client status every 0.1 -->
+dist\matchmake.exe -u 0.1
+
+<!-- end a match every 1 second -->
+dist\matchmake.exe -e 1
+```
+
+
+## Dev Practices
+For app logic, this project stores it in the `./src/` folder. The entrypoint is `./src/index.js`.
+
+For testing, this project uses `jest` as the *Test Runner* and the *Assertion Library*. Test files are written as `unit-<class>.js` in the `./tests/` folder.
+
+To test developed code:
+```
+<!-- for all platforms -->
+npm run test
+```
