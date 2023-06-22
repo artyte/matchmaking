@@ -33,6 +33,7 @@ export default class Bin {
     this.q = [];
     this.ratingDif = [];
     this.qTimes = [];
+    this.pHistory = 0;
   }
 
   getQTimes() {
@@ -41,6 +42,14 @@ export default class Bin {
 
   getTightness() {
     return this.ratingDif;
+  }
+
+  getPlayerHistory() {
+    return this.pHistory;
+  }
+
+  addPlayerHistory() {
+    this.pHistory++;
   }
 
   /**

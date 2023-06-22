@@ -109,19 +109,27 @@ export default class Client {
     );
     const allPlayers = [...this.idle, ...this.wait, ...this.play];
 
+    const unaccountedPlayers = [];
     allPlayers.forEach((player) => {
-      const bin = allBins.find((bin) => bin.isInRange(player.getRating()));
       player.resetQueueTime(false);
-
       const qHistory = player.getQueueHistory();
+      if (qHistory.length === 0) return; // player was never selected for queue
+
+      const bin = allBins.find((bin) => bin.isInRange(player.getRating()));
+      if (!bin) {
+        unaccountedPlayers.push(player); // player was queued, no matched bins
+        return;
+      }
+
       qHistory.forEach(({ queueDur, tightness, matched }) => {
         bin.addQTimes(queueDur);
         if (matched) bin.addTightness(tightness);
       });
+      bin.addPlayerHistory();
     });
 
     // eslint-disable-next-line no-console
-    console.log('Matchmaking Stats------------------------------------------------------------------------->');
+    console.log('Matchmaking Stats---------------------------------------------------------------------------------------->');
     allBins.forEach((bin) => {
       const queueTimes = bin.getQTimes();
       const avgQtime =
@@ -136,11 +144,30 @@ export default class Client {
 
       const maxRating = bin.getMax();
       const minRating = bin.getMin();
+      const numOfPlayers = bin.getPlayerHistory();
 
       // eslint-disable-next-line no-console
       console.log(
-        `Rating: ${minRating} - ${maxRating}, No. Of Matches: ${matches}, Avg. Wait Time: ${printQTime}s, Avg. MMR Tightness: ${printTightness}`,
+        `Rating: ${minRating} - ${maxRating}, Players: ${numOfPlayers}, No. Of Matches: ${matches}, Avg. Wait Time: ${printQTime}s, Avg. MMR Tightness: ${printTightness}`,
       );
     });
+
+    if (!unaccountedPlayers.length) return;
+
+    const unaccountedBin = new Bin(-99999, 99999, 9);
+    unaccountedPlayers.forEach((player) => {
+      const qHistory = player.getQueueHistory();
+      qHistory.forEach(({ queueDur }) => {
+        unaccountedBin.addQTimes(queueDur);
+      });
+    });
+    const queueTimes = unaccountedBin.getQTimes();
+    const avgQtime =
+      queueTimes.reduce((a, b) => a + b, 0) / (queueTimes.length * 1000) || 0;
+    const printQTime = avgQtime.toFixed(2);
+    // eslint-disable-next-line no-console
+    console.log(
+      `Unaccounted Players: ${unaccountedPlayers.length}, Avg. Wait Time: ${printQTime}s`,
+    );
   }
 }

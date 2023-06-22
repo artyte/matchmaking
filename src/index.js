@@ -28,7 +28,7 @@ setInterval(() => {
   const queuable = client.queue(matchMaker);
 
   if (!queuable) {
-    console.log('No players to queue!');
+    console.log('No players to queue, or player cannot be queued!');
     return;
   }
 

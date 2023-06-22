@@ -16,22 +16,6 @@ describe('A player', () => {
     expect(() => new Player('player', 100, -500)).toThrow();
   });
 
-  // it('would get accurate wins', () => {
-  //   let prevWins = 100;
-  //   let player = new Player('player1', prevWins, 500);
-  //   player.upWins();
-  //   let curWins = player.getWins();
-  //   expect(curWins).toBe(prevWins+1);
-  // });
-
-  // it('would get accurate losses', () => {
-  //   let prevLosses = 500;
-  //   let player = new Player('player1', 100, prevLosses);
-  //   player.upLosses();
-  //   let curLosses = player.getLosses();
-  //   expect(curLosses).toBe(prevLosses + 1);
-  // });
-
   it('should not queue', () => {
     let player1 = new Player('player1', 0, 100);
     bins.shift();

@@ -8,7 +8,7 @@ const options = program.opts();
 
 export const playersPerTeam = options.team ? Number(options.team) : 3;
 export const bins = [
-  [1000, 1300, playersPerTeam],
+  // [1000, 1300, playersPerTeam],
   [1300, 1500, playersPerTeam],
   [1500, 1700, playersPerTeam],
   [1700, 2001, playersPerTeam],
