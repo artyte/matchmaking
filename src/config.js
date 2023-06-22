@@ -1,13 +1,28 @@
 import { program } from 'commander';
 
 program
-  .option('-f, --file <type>', 'use a json file as data')
+  .option(
+    '-f, --file <type>',
+    'use a json file as data. default: ./data/sample-data.json',
+  )
   .option('-t, --team <type>', 'select players per team: 3/5. default: 3')
   .option('-s, --servers <type>', 'number of servers to create. default: 10')
-  .option('-q, --queueclient <type>', 'number of seconds between each client queueing. default: 0.1')
-  .option('-m, --matchclient <type>', 'number of seconds between each client matching. default: 2')
-  .option('-e, --endmatch <type>', 'number of seconds between ending a match. default: 60')
-  .option('-u, --updateclient <type>', 'number of seconds between updating all clients. default: 2');
+  .option(
+    '-q, --queueclient <type>',
+    'number of seconds between each client queueing. default: 0.1',
+  )
+  .option(
+    '-m, --matchclient <type>',
+    'number of seconds between each client matching. default: 2',
+  )
+  .option(
+    '-e, --endmatch <type>',
+    'number of seconds between ending a match. default: 60',
+  )
+  .option(
+    '-u, --updateclient <type>',
+    'number of seconds between updating all clients. default: 2',
+  );
 program.parse(process.argv);
 const options = program.opts();
 

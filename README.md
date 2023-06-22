@@ -4,10 +4,17 @@
 
 This project attempts to simulate a competitive online team-based game's matchmaking service and records and shows the average waiting time and rating tightness of each rating bin.
 
-The codebase allows:
+The codebase allows the following customizations:
 1. Creating new matchmaking algorithms through inherting base `Matchmaker` Class
-2. Customizing bin ratings and number of bins for matchmaking
-3. Customizing `config.js` to experiment with wait times
+2. Customizing bin ratings and number of bins for matchmaking in `config.js`
+3. Customizing app values by suppling them as options in the cli
+4. Run tests (unit/coverage) on any exportable files using `./tests/files`
+
+## Architecture
+
+This project uses inspirations from [open-match's architecture](https://open-match.dev/site/images/demo-match-sequence.png) as well as [apex's matchmaking](https://www.ea.com/games/apex-legends/news/matchmaking-2023) to create some of the base classes. The following image shows the simulated architecture of this project:
+
+![Architecture][https://github.com/artyte/matchmaking/raw/dev/architecture.png]
 
 ## Pre-Requisite
 
@@ -132,4 +139,16 @@ dist\matchmake.exe -u 0.1
 
 <!-- end a match every 1 second -->
 dist\matchmake.exe -e 1
+```
+
+
+## Dev Practices
+For app logic, this project stores it in the `./src/` folder. The entrypoint is `./src/index.js`.
+
+For testing, this project uses `jest` as the *Test Runner* and the *Assertion Library*. Test files are written as `unit-<class>.js` in the `./tests/` folder.
+
+To test developed code:
+```
+<!-- for all platforms -->
+npm run test
 ```
