@@ -77,6 +77,8 @@ export default class MatchmakerImpl extends Matchmaker {
     if (!player.calRating(this.mmr)) return false;
 
     const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
+    if (!q) return false;
+
     const result = q.enqueue(player);
     return result;
   }
