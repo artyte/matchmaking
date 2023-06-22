@@ -14,7 +14,7 @@ The codebase allows the following customizations:
 
 This project uses inspirations from [open-match's architecture](https://open-match.dev/site/images/demo-match-sequence.png) as well as [apex's matchmaking](https://www.ea.com/games/apex-legends/news/matchmaking-2023) to create some of the base classes. The following image shows the simulated architecture of this project:
 
-![Architecture](https://github.com/artyte/matchmaking/raw/dev/architecture.png)
+![Architecture](https://github.com/artyte/matchmaking/raw/master/architecture.png)
 
 ## Pre-Requisite
 
@@ -51,6 +51,8 @@ npm run build-windows
 This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.
 
 ## Running App
+While running the app, please press `ctrl+c` to stop the app and the app will display calculated matchmaking stats.
+
 To run app on linux:
 ```
 <!-- default values -->
