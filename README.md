@@ -51,7 +51,7 @@ npm run build-windows
 This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.
 
 ## Running App
-While running the app, please press `ctrl+c` to stop the app and the app will display calculated matchmaking stats.
+While running the app, press `ctrl+c` to stop the app. The app will then display calculated matchmaking stats.
 
 To run app on linux:
 ```
