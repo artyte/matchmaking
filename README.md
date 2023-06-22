@@ -1,39 +1,13 @@
-# Riot Games HKG Studio
+# Matchmaking Service
 
-## Context
+## Purpose
 
-Riot Games HKG Studio coding challenge.
+This project attempts to simulate a competitive online team-based game's matchmaking service and records and shows the average waiting time and rating tightness of each rating bin.
 
-## Problem Statement
-
-Let's pretend that we’ve created a new competitive online team-based game ;)
-
-Players of different skills levels will play the game, so we’ll need to match them in a way that keeps the game fun and fair. We want to match players based on their individual skill level and ensure teams are balanced. We're not expecting each matchup to be perfect (especially not at first), but we want the matchmaking system to eventually get smarter and accurately match players on teams.
-
-Your challenge is to code a comprehensive matchmaking system in any technology you feel comfortable with. Your solution will repeatedly draw a set number of players from a larger pool and match them into teams. Players will enter the matchmaking process as solo participants, so your system should create balanced 3v3, 5v5, etc. teams.
-
-We’ve provided you with sample data in JSON for a pool of 200 players that includes their names, total wins and total losses. We’re happy to toss additional info into the matchmaking mix, so go ahead and invent a new data field and use that in your code if you’re feeling extra ambitious.
-
-## Criteria
-
-An engineer will take whatever you submit and test it, so make sure your solution:
-
-- is documented
-- contains the source code
-- will compile as submitted
-- runs on any machine/OS
-- is easy to test ;)
-
-Ideally, we want a flexible system that’ll allow us to edit the matchmaking rules and test out different strategies without extensive engineering efforts.
-
-Last but not least, your solution should be "production-ready", so consider:
-
-- best practices and principles
-- build scripts
-- tests (unit / integration / coverage)
-
-We've also provided you a Maven/Java project template as a starting point to create your matchmaking system but **feel free to disregard it and propose your own flavor. Use the tech stack of your choice that will allow you to better demonstrate your craft/mastery**.
-
+The codebase allows:
+1. Creating new matchmaking algorithms through inherting base `Matchmaker` Class
+2. Customizing bin ratings and number of bins for matchmaking
+3. Customizing `config.js` to experiment with wait times
 
 ## Pre-Requisite
 
@@ -68,3 +42,44 @@ npm run build-windows
 ```
 
 This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.
+
+## Running App
+To run app with default values:
+```
+<!-- for linux -->
+./dist/matchmake-linux
+
+<!-- for mac -->
+./dist/matchmake-macos
+
+<!-- for windows -->
+dist\matchmake.exe
+```
+
+To run app with supplied values on linux (use the appropriate calling style for other OS):
+```
+<!-- user guide -->
+./dist/matchmake-linux -h
+
+<!-- using another sample data file -->
+./dist/matchmake-linux -f /your/file.json
+
+<!-- selecting 5v5 -->
+./dist/matchmake-linux -t 5
+
+<!-- using custom number of servers -->
+./dist/matchmake-linux -s 100
+
+<!-- finding clients to queue every 1 second -->
+./dist/matchmake-linux -q 1
+
+<!-- find a match every 1 second -->
+./dist/matchmake-linux -m 1
+
+<!-- update client status every 0.1 -->
+./dist/matchmake-linux -u 0.1
+
+<!-- end a match every 1 second -->
+./dist/matchmake-linux -e 1
+
+```

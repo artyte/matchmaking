@@ -8,7 +8,7 @@
     "build": "npm run alert && ./node_modules/.bin/babel src -d tmp && pkg ./tmp/index.js -t node16-linux-x64,node16-macos,node16-win-x64 -o dist/matchmake && rm -rf ./tmp",
     "build-windows": "npm run alert && .\\node_modules\\.bin\\babel src -d tmp && pkg .\\tmp\\index.js -t node16-win-x64 -o dist\\matchmake && rmdir /s /q tmp",
     "start": "npm run alert && npm run build && ./dist/matchmake-macos",
-    "alert": "echo 'Press ctrl+c when program starts to matchmake to end program and get matchmaking stats...'"
+    "alert": "echo 'Press ctrl+c when program starts to matchmake to end program and get matchmaking stats.\n'"
   },
   "repository": {
     "type": "git",
