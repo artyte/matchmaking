@@ -73,6 +73,7 @@ export default class Player {
    */
   resetQueueTime(isMatched, ratingDif = -1) {
     if (typeof isMatched !== 'boolean') return false;
+    if (typeof ratingDif !== 'number') return false;
     if (!this.queueTime) return false;
 
     this.qHistory.push({

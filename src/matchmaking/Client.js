@@ -111,11 +111,12 @@ export default class Client {
 
     allPlayers.forEach((player) => {
       const bin = allBins.find((bin) => bin.isInRange(player.getRating()));
+      player.resetQueueTime(false);
 
       const qHistory = player.getQueueHistory();
-      qHistory.forEach(({ queueDur, tightness }) => {
+      qHistory.forEach(({ queueDur, tightness, matched }) => {
         bin.addQTimes(queueDur);
-        bin.addTightness(tightness);
+        if (matched) bin.addTightness(tightness);
       });
     });
 
