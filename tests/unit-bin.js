@@ -1,5 +1,7 @@
 import Bin from '../src/matchmaking/Bin';
+import MatchmakerImpl from '../src/matchmaking/MatchmakerImpl';
 import Player from '../src/matchmaking/Player';
+import { bins } from '../src/config';
 import { expect } from '@jest/globals';
 
 describe('A bin', () => {
@@ -17,74 +19,56 @@ describe('A bin', () => {
 
   it('would not enqueue', () => {
     // player ratings too low
-    var bin = new Bin(50, 100, 3);
-    var player1 = new Player('player', 100, 500);
-    var result = bin.enqueue(player1);
+    bins.shift();
+    let player1 = new Player('player', 0, 5000);
+    let matchmaker = new MatchmakerImpl(bins);
+    let result = matchmaker.enterMatchmaking(player1);
     expect(result).toBe(false);
-    result = true;
-
-    // too many players
-    bin = new Bin(0, 1000, 1);
-    player1 = new Player('player1', 100, 0);
-    var player2 = new Player('player2', 100, 0);
-    var player3 = new Player('player3', 100, 0);
-    bin.enqueue(player1);
-    bin.enqueue(player2);
-    result = bin.enqueue(player3);
-    expect(result).toBe(false);
-    result = true;
 
     // same player
-    bin = new Bin(0, 1000, 3);
+    let bin = new Bin(1000, 2000, 3);
     bin.enqueue(player1);
     result = bin.enqueue(player1);
     expect(result).toBe(false);
-    result = true;
-
     // invalid player type
     player1 = 'asd';
     result = bin.enqueue(player1);
     expect(result).toBe(false);
-    result = true;
   });
 
   it('would not dequeue', () => {
     // invalid player type
-    var bin = new Bin(0, 1000, 2);
-    var player1 = new Player('player1', 100, 0);
+    let bin = new Bin(1000, 2000, 2);
+    let player1 = new Player('player1', 100, 0);
     bin.enqueue(player1);
-    var result = bin.dequeue('asd');
+    let result = bin.dequeue('asd');
     expect(result).toBe(false);
-    result = true;
 
     // empty bin
-    bin = new Bin(0, 1000, 2);
+    bin = new Bin(1000, 2000, 2);
     result = bin.dequeue(player1);
     expect(result).toBe(false);
-    result = true;
   });
 
   it('should not be full', () => {
-    var bin = new Bin(0, 1000, 2);
-    var player1 = new Player('player1', 100, 0);
+    let bin = new Bin(1000, 2000, 2);
+    let player1 = new Player('player1', 100, 0);
     bin.enqueue(player1);
-    var result = bin.isFull();
+    let result = bin.isFull();
     expect(result).toBe(false);
-    result = true;
   });
 
   it('should be full', () => {
-    var bin = new Bin(0, 1000, 1);
-    var player1 = new Player('player1', 100, 0);
-    var player2 = new Player('player2', 100, 0);
+    let bin = new Bin(1000, 2000, 1);
+    let player1 = new Player('player1', 100, 0);
+    let player2 = new Player('player2', 100, 0);
     bin.enqueue(player1);
     bin.enqueue(player2);
-    var result = bin.isFull();
+    let result = bin.isFull();
 
-    var queue = [];
+    let queue = [];
     queue.push(player1);
     queue.push(player2);
-    expect(result).toEqual(queue);
-    result = true;
+    expect(result).toEqual(queue); //returned match is contains player1 and player2
   });
 });

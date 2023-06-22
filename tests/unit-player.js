@@ -54,12 +54,9 @@ describe('A player', () => {
     player1.setQueueTime();
     let result = player1.resetQueueTime('asd');
     expect(result).toBe(false);
-    result = true;
-
     // no initial queue time
     player1 = new Player('player1', 100, 0);
     result = player1.resetQueueTime(true);
     expect(result).toBe(false);
-    result = true;
   });
 });

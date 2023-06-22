@@ -56,17 +56,19 @@ export default class Director {
   matchArrayify(team1, team2) {
     if (!(team1 instanceof Array)) return false;
     if (!(team2 instanceof Array)) return false;
+    let result = true;
     team1.forEach((player) => {
-      if (!(player instanceof Player)) return false;
+      if (!(player instanceof Player)) result = false;
     });
     team2.forEach((player) => {
-      if (!(player instanceof Player)) return false;
+      if (!(player instanceof Player)) result = false;
     });
+    if (!result) return false;
 
     const team1Players = team1.map((player) => player.getName());
     const team2Players = team2.map((player) => player.getName());
 
-    let result = team1Players.findIndex((player) => !player);
+    result = team1Players.findIndex((player) => !player);
     if (result !== -1) return false;
     result = team2Players.findIndex((player) => !player);
     if (result !== -1) return false;
