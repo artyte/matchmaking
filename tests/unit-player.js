@@ -54,12 +54,16 @@ describe('A player', () => {
     player1.setQueueTime();
     let result = player1.resetQueueTime('asd');
     expect(result).toBe(false);
-    result = true;
-
     // no initial queue time
     player1 = new Player('player1', 100, 0);
     result = player1.resetQueueTime(true);
     expect(result).toBe(false);
-    result = true;
+  });
+
+  it('should not calculate rating', async () => {
+    // invalid isMatched type
+    let player1 = new Player('player1', 100, 0);
+    let result = player1.calRating('asd');
+    expect(result).toBe(false);
   });
 });
