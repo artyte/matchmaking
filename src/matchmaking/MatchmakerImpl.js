@@ -59,8 +59,11 @@ export default class MatchmakerImpl extends Matchmaker {
     if (typeof losses !== 'number') return false;
 
     const k = 1000;
-    const expectedWins = wins / (wins + losses);
-    const rating = expectedWins ? 1500 + k * (expectedWins - 0.5) : 1500;
+    const expectedWins = 
+      wins ? wins / (wins + losses) 
+        : losses ? 1 / (losses + 1) 
+          : 0.5;
+    const rating = 1500 + k * (expectedWins - 0.5);
     return rating;
   }
 
@@ -96,6 +99,8 @@ export default class MatchmakerImpl extends Matchmaker {
     if (!player.calRating(this.mmr)) return false;
 
     const q = this.bins.find((bin) => bin.isInRange(player.getRating()));
+    if (!q) return false;
+
     const result = q.gofirst(player);
     return result;
   }
