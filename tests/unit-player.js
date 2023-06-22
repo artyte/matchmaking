@@ -59,4 +59,11 @@ describe('A player', () => {
     result = player1.resetQueueTime(true);
     expect(result).toBe(false);
   });
+
+  it('should not calculate rating', async () => {
+    // invalid isMatched type
+    let player1 = new Player('player1', 100, 0);
+    let result = player1.calRating('asd');
+    expect(result).toBe(false);
+  });
 });
