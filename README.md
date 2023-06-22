@@ -14,7 +14,7 @@ The codebase allows the following customizations:
 
 This project uses inspirations from [open-match's architecture](https://open-match.dev/site/images/demo-match-sequence.png) as well as [apex's matchmaking](https://www.ea.com/games/apex-legends/news/matchmaking-2023) to create some of the base classes. The following image shows the simulated architecture of this project:
 
-![Architecture](https://github.com/artyte/matchmaking/raw/master/architecture.png)
+![Architecture](https://github.com/artyte/matchmaking/raw/main/architecture.png)
 
 ## Pre-Requisite
 
