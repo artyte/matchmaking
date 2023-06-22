@@ -44,20 +44,11 @@ npm run build-windows
 This will produce the binary/executable in `./dist/`. The binary/executable will be used for running the app in the CLI.
 
 ## Running App
-To run app with default values:
+To run app on linux:
 ```
-<!-- for linux -->
+<!-- default values -->
 ./dist/matchmake-linux
 
-<!-- for mac -->
-./dist/matchmake-macos
-
-<!-- for windows -->
-dist\matchmake.exe
-```
-
-To run app with supplied values on linux (use the appropriate calling style for other OS):
-```
 <!-- user guide -->
 ./dist/matchmake-linux -h
 
@@ -81,5 +72,64 @@ To run app with supplied values on linux (use the appropriate calling style for 
 
 <!-- end a match every 1 second -->
 ./dist/matchmake-linux -e 1
+```
 
+To run app on macos:
+```
+<!-- default values -->
+./dist/matchmake-macos
+
+<!-- user guide -->
+./dist/matchmake-macos -h
+
+<!-- using another sample data file -->
+./dist/matchmake-macos -f /your/file.json
+
+<!-- selecting 5v5 -->
+./dist/matchmake-macos -t 5
+
+<!-- using custom number of servers -->
+./dist/matchmake-macos -s 100
+
+<!-- finding clients to queue every 1 second -->
+./dist/matchmake-macos -q 1
+
+<!-- find a match every 1 second -->
+./dist/matchmake-macos -m 1
+
+<!-- update client status every 0.1 -->
+./dist/matchmake-macos -u 0.1
+
+<!-- end a match every 1 second -->
+./dist/matchmake-macos -e 1
+```
+
+To run app on windows:
+```
+<!-- default values -->
+dist\matchmake.exe
+
+<!-- user guide -->
+dist\matchmake.exe -h
+
+<!-- using another sample data file -->
+dist\matchmake.exe -f /your/file.json
+
+<!-- selecting 5v5 -->
+dist\matchmake.exe -t 5
+
+<!-- using custom number of servers -->
+dist\matchmake.exe -s 100
+
+<!-- finding clients to queue every 1 second -->
+dist\matchmake.exe -q 1
+
+<!-- find a match every 1 second -->
+dist\matchmake.exe -m 1
+
+<!-- update client status every 0.1 -->
+dist\matchmake.exe -u 0.1
+
+<!-- end a match every 1 second -->
+dist\matchmake.exe -e 1
 ```
